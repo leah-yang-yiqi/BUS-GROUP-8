@@ -1,0 +1,71 @@
+/* Apply a consistent background and font */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Center container with padding and shadow */
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Message bubble styles */
+.message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+}
+
+/* Style for user's chat bubble */
+.message.user {
+    background-color: #dcf8c6;
+    text-align: right;
+}
+
+/* Style for AI's chat bubble */
+.message.ai {
+    background-color: #e0e0e0;
+    text-align: left;
+}
+
+/* Chat input area styling */
+.input-form {
+    display: flex;
+    gap: 10px;
+}
+
+/* Expand input field in the chat form */
+.input-form input {
+    flex: 1;
+    padding: 10px;
+}
+
+/* Submit button style */
+.input-form button {
+    padding: 10px 20px;
+}
+
+/* Enhance default buttons with smooth hover */
+.btn {
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    filter: brightness(0.95);
+}
+
+/* Light gray text for subtle info */
+.text-muted {
+    color: #6c757d;
+}
+
+
+/* Smooth scroll for chat box */
+#chat-box {
+    scroll-behavior: smooth;
+}

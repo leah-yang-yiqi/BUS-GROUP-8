@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Other Functions {% endblock %}
+{% block content %}
+    <div class="container mt-5">
+
+ <div class="card shadow-sm p-4 mb-5 rounded">
+        <h3 class="text-center text-primary mb-4">🏠 Dormitory Information</h3>
+        <form method="GET" action="{{ url_for('search_dormitory') }}">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="search" placeholder="Search for dormitory details (e.g., price, environment)" required>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+
+        {% if dormitories %}
+        <div class="list-group">
+            {% for dorm in dormitories %}
+                <div class="list-group-item">
+                    <h5>{{ dorm.name }}</h5>
+                    <p>Price: ${{ dorm.price }}</p>
+                    <p>{{ dorm.environment }}</p>
+                    <a href="{{ dorm.details_link }}" class="btn btn-info btn-sm">View Details</a>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No dormitories found.</p>
+        {% endif %}
+    </div>
+
+     <!-- Campus Jobs -->
+    <div class="card shadow-sm p-4 mb-5 rounded">
+        <h3 class="text-center text-warning mb-4">💼 Economic Aid & Campus Jobs</h3>
+        <form method="GET" action="{{ url_for('search_jobs') }}">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="search" placeholder="Search for economic aid or campus jobs" required>
+                <button class="btn btn-warning" type="submit">Search</button>
+            </div>
+        </form>
+
+        {% if jobs %}
+        <div class="list-group">
+            {% for job in jobs %}
+                <div class="list-group-item">
+                    <h5>{{ job.title }}</h5>
+                    <p>{{ job.description }}</p>
+                    <a href="{{ job.details_link }}" class="btn btn-info btn-sm">View Details</a>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No job or aid information found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Student Question Section -->
+      {% if current_user.role == 'Student' %}
+<div class="card shadow-sm mb-5 p-4">
+    <h3 class="text-center text-success mb-4">💬 Submit Your Questions</h3>
+    <form method="POST" action="{{ url_for('other_functions')}}">
+        <textarea name="question_text" class="form-control mb-3" rows="4" placeholder="If you have questions, please tell us." required></textarea>
+        <button type="submit" class="btn btn-success w-100">Submit Your Question</button>
+    </form>
+</div>
+{% endif %}
+
+ <!-- Staffs and admin process feedback -->
+    {% if current_user.role in ['Staff', 'Admin'] and questions %}
+<div class="card shadow-sm mb-5 p-4">
+    <h3 class="text-center text-primary mb-4">📋 Student Accommodation Question Records</h3>
+    {% for question in questions %}
+        <div class="border rounded p-3 mb-3">
+            <p><strong>{{ question.user.username }} ({{ question.timestamp.strftime('%Y-%m-%d %H:%M') }})</strong></p>
+            <p>{{ question.content }}</p>
+            {% if question.response %}
+                <p><span class="badge bg-success">Response:</span> {{ question.response }}</p>
+            {% else %}
+                <form method="POST" action="{{ url_for('respond_question', question_id=question.id) }}">
+                    <div class="input-group">
+                        <input type="text" name="response" class="form-control" placeholder="Add question..." required>
+                        <button class="btn btn-sm btn-outline-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Get Suggestions{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+  <h2 class="mb-4">Get Budget Suggestions</h2>
+
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <!-- Budget Expression -->
+    <div class="mb-3">
+      {{ form.budget_expression.label(class="form-label") }}
+      {{ form.budget_expression(class="form-control", placeholder="e.g. 500+300") }}
+    </div>
+
+    <!-- Time Unit -->
+    <div class="mb-3">
+      {{ form.time_unit.label(class="form-label") }}
+      {{ form.time_unit(class="form-select") }}
+    </div>
+
+    <!-- Accommodation Preference -->
+    <div class="mb-3">
+      {{ form.prefer_accommodation.label(class="form-label") }}
+      {{ form.prefer_accommodation(class="form-select", id="prefer-accommodation") }}
+    </div>
+
+    <!-- Preferences -->
+    <div class="row">
+      <div class="col-md-6 mb-3" id="prefer-dorm-section" style="display: none;">
+        {{ form.prefer_dormitory.label(class="form-label") }}
+        {{ form.prefer_dormitory(class="form-select") }}
+      </div>
+      <div class="col-md-6 mb-3" id="prefer-rental-section" style="display: none;">
+        {{ form.prefer_rental.label(class="form-label") }}
+        {{ form.prefer_rental(class="form-select") }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        {{ form.prefer_food.label(class="form-label") }}
+        {{ form.prefer_food(class="form-select") }}
+      </div>
+      <div class="col-md-4 mb-3">
+        {{ form.prefer_supplies.label(class="form-label") }}
+        {{ form.prefer_supplies(class="form-select") }}
+      </div>
+      <div class="col-md-4 mb-3">
+        {{ form.prefer_transport_ways.label(class="form-label") }}
+        {{ form.prefer_transport_ways(class="form-select") }}
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn btn-primary">Generate Suggestion</button>
+  </form>
+
+  <!-- Suggestion Result -->
+  {% if suggestion %}
+    <div class="mt-5">
+      <h4>Suggested Budget Breakdown:</h4>
+      <ul class="list-group">
+        {% for category, (item, cost) in suggestion.items() %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ category }} - {{ item }}
+            <span class="badge bg-success rounded-pill">£ {{ "%.2f"|format(cost) }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+
+      {% if deficit > 0 %}
+        <div class="alert alert-danger mt-3">
+          <strong>Warning:</strong> Your preferences exceed the budget by <strong>£ {{ "%.2f"|format(deficit) }}</strong>.
+        </div>
+      {% endif %}
+    </div>
+  {% elif form.is_submitted() %}
+    <!-- Do not show the default "unable to generate" message if flash exists -->
+    {% if not get_flashed_messages() %}
+      <div class="alert alert-warning mt-4">
+        Unable to generate a suggestion with current budget and preferences.
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+
+<!-- JS for dynamic field display -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const preferAccommodation = document.getElementById("prefer-accommodation");
+    const dormSection = document.getElementById("prefer-dorm-section");
+    const rentalSection = document.getElementById("prefer-rental-section");
+
+    function updateFields() {
+      if (preferAccommodation.value === "Dormitory") {
+        dormSection.style.display = "block";
+        rentalSection.style.display = "none";
+      } else if (preferAccommodation.value === "Off-campus") {
+        dormSection.style.display = "none";
+        rentalSection.style.display = "block";
+      } else {
+        dormSection.style.display = "none";
+        rentalSection.style.display = "none";
+      }
+    }
+
+    preferAccommodation.addEventListener("change", updateFields);
+    updateFields(); // Run on initial load
+  });
+</script>
+{% endblock %}

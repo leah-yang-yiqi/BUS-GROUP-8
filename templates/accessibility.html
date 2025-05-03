@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Title Section -->
+    <h2 class="text-center text-primary mb-4">♿ Accessibility Support</h2>
+
+    <!-- Government Allowance & Grants Search Section -->
+    <div class="card shadow-sm mb-5 p-4">
+        <h3 class="text-center text-info mb-4">💸 Search Government Allowances & Grants</h3>
+        <form method="GET" action="https://www.gov.uk/search" target="_blank" class="d-flex">
+            <input type="text" class="form-control me-2" name="q" placeholder="Search for allowances or grants..." required>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <!-- Upload Resource Section -->
+    {% if current_user.is_authenticated and current_user.role in ['Staff', 'Admin'] %}
+    <div class="card shadow-sm mb-5 p-4">
+        <h3 class="text-center text-success mb-4">Upload Accessibility Resources</h3>
+        <form class="mb-4" action="{{ url_for('accessibility') }}" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label">Upload Resource (Image, Video, or Text):</label>
+                <input type="file" name="file" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Upload</button>
+        </form>
+    </div>
+    {% endif %}
+    
+    <!-- Search for Uploaded Files -->
+    <div class="card shadow-sm mb-5 p-4">
+        <h3 class="text-center text-warning mb-4">Existed Resources</h3>
+        <!-- Search box-->
+        <form class="mb-4" action="{{ url_for('accessibility') }}" method="get">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search by filename..." value="{{ search_query }}">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+
+         <!-- Upload Resources -->
+                {% if files %}
+            <ul class="list-group">
+                {% for file in files %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span>{{ file }}</span>
+
+    <div class="btn-group btn-group-sm" role="group">
+        <a class="btn btn-secondary" href="{{ url_for('download_file', filename=file) }}">Download</a>
+        {% if current_user.role in ['Staff', 'Admin'] %}
+        <a class="btn btn-danger" href="{{ url_for('delete_file', filename=file) }}">Delete</a>
+        {% endif %}
+    </div>
+</li>
+{% endfor %}
+         </ul>
+        {% else %}
+            <p class="text-center text-muted">No matching resources found.</p>
+        {% endif %}
+    </div>
+
+<!-- Student submit feedback -->
+    {% if current_user.role == 'Student' %}
+<div class="card shadow-sm mb-5 p-4">
+    <h3 class="text-center text-danger mb-4">💬 Submit Your Feedback</h3>
+    <form method="POST">
+        <textarea name="feedback_text" class="form-control mb-3" rows="4" placeholder="If you have questions or suggestions, please tell us." required></textarea>
+        <button type="submit" class="btn btn-danger w-100">Submit Feedback</button>
+    </form>
+</div>
+{% endif %}
+
+    <!-- Staffs and admin process feedback -->
+    {% if current_user.role in ['Staff', 'Admin'] and feedbacks %}
+<div class="card shadow-sm mb-5 p-4">
+    <h3 class="text-center text-primary mb-4">📋 Student Feedback Records</h3>
+    {% for feedback in feedbacks %}
+        <div class="border rounded p-3 mb-3">
+            <p><strong>{{ feedback.user.username }} ({{ feedback.timestamp.strftime('%Y-%m-%d %H:%M') }})</strong></p>
+            <p>{{ feedback.content }}</p>
+            {% if feedback.response %}
+                <p><span class="badge bg-success">Response:</span> {{ feedback.response }}</p>
+            {% else %}
+                <form method="POST" action="{{ url_for('respond_feedback', feedback_id=feedback.id) }}">
+                    <div class="input-group">
+                        <input type="text" name="response" class="form-control" placeholder="Add response..." required>
+                        <button class="btn btn-sm btn-outline-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+</div>
+{% endblock %}

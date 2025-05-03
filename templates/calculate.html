@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Calculate Your Budget{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Calculate Your Weekly Budget</h2>
+
+    <form method="POST" action="{{ url_for('calculate') }}">
+        {{ form.hidden_tag() }}
+
+        <!-- Accommodation -->
+        <div class="mb-3">
+            {{ form.accommodation.label(class="form-label") }}
+            {{ form.accommodation(class="form-control", id="accommodation") }}
+        </div>
+
+        <!-- Dormitory Selection -->
+        <div class="mb-3" id="dormitory-selection" style="display: none;">
+            {{ form.dormitory.label(class="form-label") }}
+            {{ form.dormitory(class="form-control") }}
+        </div>
+
+        <!-- Location Selection -->
+        <div class="mb-3" id="location-selection" style="display: none;">
+            {{ form.location.label(class="form-label") }}
+            {{ form.location(class="form-control") }}
+        </div>
+
+        <!-- Food -->
+        <div class="mb-3">
+            {{ form.food.label(class="form-label") }}
+            {{ form.food(class="form-control") }}
+        </div>
+
+        <!-- Transport -->
+        <div class="mb-3">
+            {{ form.transport_way.label(class="form-label") }}
+            {{ form.transport_way(class="form-control") }}
+        </div>
+
+        <!-- Supplies -->
+        <div class="mb-3">
+            {{ form.supplies.label(class="form-label") }}
+            {{ form.supplies(class="form-control") }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Calculate</button>
+    </form>
+
+    {% if total is not none %}
+    <div class="mt-4">
+        <h4>Total Weekly Cost: <strong>£{{ total }}</strong></h4>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const accommodation = document.getElementById("accommodation");
+        const dormitorySelection = document.getElementById("dormitory-selection");
+        const locationSelection = document.getElementById("location-selection");
+
+        function updateSelections() {
+            if (accommodation.value === "Dormitory") {
+                dormitorySelection.style.display = "block";
+                locationSelection.style.display = "none";
+            } else if (accommodation.value === "Off-campus") {
+                dormitorySelection.style.display = "none";
+                locationSelection.style.display = "block";
+            } else {
+                dormitorySelection.style.display = "none";
+                locationSelection.style.display = "none";
+            }
+        }
+
+        accommodation.addEventListener("change", updateSelections);
+        updateSelections(); //
+    });
+</script>
+{% endblock %}

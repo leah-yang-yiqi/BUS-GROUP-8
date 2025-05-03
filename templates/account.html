@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Feedbacks</h2>
+
+    <div class="card shadow-sm p-4 mb-5">
+        <h4 class="mb-4">Feedback History</h4>
+
+        {% if feedbacks %}
+            {% for feedback in feedbacks %}
+                <div class="border rounded p-3 mb-3">
+                    <p><strong>Submitted:</strong> {{ feedback.timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
+                    <p><strong>Feedback:</strong><br>{{ feedback.content }}</p>
+                    {% if feedback.response %}
+                        <p><strong>Status:</strong><span class="text-success">Processed</span></p>
+                        <p><strong>Response:</strong><br>{{ feedback.response }}</p>
+                    {% else %}
+                        <p><strong>Status:</strong> <span class="text-warning">Pending</span></p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">You have not submitted any feedback yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="card shadow-sm p-4 mb-5">
+        <h4 class="mb-4">Question History</h4>
+
+        {% if questions %}
+            {% for question in questions %}
+                <div class="border rounded p-3 mb-3">
+                    <p><strong>Submitted:</strong> {{ question.timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
+                    <p><strong>Question:</strong><br>{{ question.content }}</p>
+                    {% if question.response %}
+                        <p><strong>Status:</strong><span class="text-success">Processed</span></p>
+                        <p><strong>Response:</strong><br>{{ question.response }}</p>
+                    {% else %}
+                        <p><strong>Status:</strong> <span class="text-warning">Pending</span></p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">You have not submitted any question yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
