@@ -43,6 +43,13 @@ To ensure the correct version of torch, please install it strictly in accordance
 
 Enter the following instructions in the terminal to run:
 
+First, import the initial data into the database.
+
+```
+pythonrun debug_utils.py
+```
+Next
+
 ```
 python app.py
 ```
