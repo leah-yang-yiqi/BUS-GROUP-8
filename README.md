@@ -46,9 +46,9 @@ Enter the following instructions in the terminal to run:
 First, import the initial data into the database.
 
 ```
-pythonrun debug_utils.py
+python debug_utils.py
 ```
-Next
+Next,
 
 ```
 python app.py
@@ -60,7 +60,11 @@ Due to considerations of computational resources, we built the project to run on
 python app.py --host 0.0.0.0 --port 8080
 ```
 
+The script contains test code. Test cases are in the folder of tests. Simply enter `pytest` in the terminal to run the test cases.
 
+```
+pytest
+```
 
 ### Environmental configuration
 
