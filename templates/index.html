@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-center my-5">
+    <h2 class="display-4 text-primary">Welcome to UniSupport Agent Platform</h2>
+    <p class="lead text-muted mb-5">Select a function below to explore:</p>
+
+    <ul class="list-group">
+        <li class="list-group-item text-center mb-3">
+            <a href="{{ url_for('chat_ui') }}" class="btn btn-primary w-100">🤖 AI Dialogue</a>
+        </li>
+        <li class="list-group-item text-center mb-3">
+            <a href="{{ url_for('accessibility') }}" class="btn btn-success w-100">♿ Accessibility Support</a>
+        </li>
+        <li class="list-group-item text-center mb-3">
+            <a href="{{ url_for('cost_of_our_living') }}" class="btn btn-warning w-100">💰 Cost of Living Support</a>
+        </li>
+        <li class="list-group-item text-center mb-3">
+            <a href="{{ url_for('other_functions') }}" class="btn btn-info w-100"> Other Functions</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Cost of Living Budget Calculation Section -->
+    <div class="card shadow-sm p-4 mb-5 rounded">
+        <h2 class="text-center text-success mb-4">Cost of Living Support</h2>
+        <p class="text-center text-muted mb-5">Estimate your monthly living costs based on your inputs:</p>
+
+        <form method="POST" action="{{ url_for('cost_of_living') }}" class="space-y-4">
+            <div class="mb-3">
+                <label for="rent" class="form-label">Rent (per month):</label>
+                <input type="number" id="rent" name="rent" class="form-control" min="0" required>
+            </div>
+            <div class="mb-3">
+                <label for="groceries" class="form-label">Groceries (per month):</label>
+                <input type="number" id="groceries" name="groceries" class="form-control" min="0" required>
+            </div>
+            <div class="mb-3">
+                <label for="transportation" class="form-label">Transportation (per month):</label>
+                <input type="number" id="transportation" name="transportation" class="form-control" min="0" required>
+            </div>
+            <div class="mb-3">
+                <label for="entertainment" class="form-label">Entertainment (per month):</label>
+                <input type="number" id="entertainment" name="entertainment" class="form-control" min="0" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100 py-3 fw-bold">Calculate Total Budget</button>
+        </form>
+
+        {% if total_budget %}
+        <div class="alert alert-warning mt-4">
+            <h4 class="fw-bold">Estimated Total Budget:</h4>
+            <p class="fs-4">${{ total_budget }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

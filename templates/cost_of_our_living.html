@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+  <div class="container mt-5 text-center">
+    <h2 class="mb-4">Welcome to the Cost of living</h2>
+    <p class="lead">Choose an option to get started:</p>
+
+    <div class="d-grid gap-3 col-6 mx-auto mt-4">
+      <a href="{{ url_for('calculate') }}" class="btn btn-success btn-lg">Calculate Your Budget</a>
+      <a href="{{ url_for('suggest') }}" class="btn btn-primary btn-lg">Get Budget Suggestions</a>
+      <a href="{{ url_for('cost_of_living') }}" class="btn btn-info btn-lg">Calculate Your Monthly Living Costs</a>
+    </div>
+
+      
+<!-- Browse Budget Resources Section -->
+     {% if current_user.role in ['Staff', 'Admin'] %}
+    <div class="card shadow-sm p-4 mb-5 rounded">
+        <h3 class="text-center text-info mb-4">Browse Budget Resources</h3>
+        <form method="POST" action="{{ url_for('upload_resource') }}" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                <label class="form-label">Upload Resource (Image, Video, or Text):</label>
+                <input type="file" name="resource_file" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success">Upload Resource</button>
+        </form>
+        {% endif %}
+
+        <!-- Display uploaded resources (images, text files) -->
+        <h4 class="text-muted">Uploaded Resources:</h4>
+        {% if resources %}
+            <ul class="list-group">
+               {% for resource in resources %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>{{ resource }}</span>
+        <div class="btn-group btn-group-sm" role="group">
+            <a class="btn btn-secondary" href="{{ url_for('download_resource', filename=resource) }}">Download</a>
+            {% if current_user.role in ['Staff', 'Admin'] %}
+        <a class="btn btn-danger" href="{{ url_for('delete_resource', filename=resource) }}">Delete</a>
+        {% endif %}
+        </div>
+    </li>
+{% endfor %}
+            </ul>
+        {% else %}
+            <p>No resources uploaded yet.</p>
+        {% endif %}
+    </div>
+  </div>
+{% endblock %}
