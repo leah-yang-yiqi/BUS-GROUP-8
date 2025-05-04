@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% import "bootstrap_wtf.html" as wtf %}
+
+{% block content %}
+    <div class="container">
+    <table  class="table table-bordered table-striped mt-3">
+
+        <tbody>
+
+         <tr>
+             <th></th>
+             <th>Monday</th>
+             <th>Tuesday</th>
+             <th>Wednesday</th>
+             <th>Thursday</th>
+             <th>Friday</th>
+         </tr>
+         <tr>
+             <td>09:00</td>
+             {% if day==1 and hour==9 %}
+             <td>{{item}}</td>
+             {% endif %}
+             {% if day==2 and hour==9 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==3 and hour==9 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==4 and hour==9 %}
+             <td>{{item}}</td>
+             {% endif %}
+             {% if day==5 and hour==9 %}
+             <td>{{item}}</td>
+             {% endif %}
+
+
+         </tr>
+         <tr>
+             <td>10:00</td>
+             {% if day==1 and hour==10 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==2 and hour==10 %}
+             <td>{{item}}</td>
+             {% endif %}
+             {% if day==3 and hour==10 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==4 and hour==10 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==5 and hour==10 %}
+             <td>{{ item}}</td>
+             {% endif %}
+         </tr>
+         <tr>
+             <td>11:00</td>
+             {% if day==1 and hour==11 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==2 and hour==11 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==3 and hour==11 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==4 and hour==11 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==5 and hour==11 %}
+             <td>{{ item}}</td>
+             {% endif %}
+         </tr>
+         <tr>
+             <td>12:00</td>
+             {% if day==1 %}
+             {% if hour==12 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% endif %}
+             {% if day==2  %}
+             {% if hour==12 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% endif %}
+             {% if day==3 and hour==12 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==4 and hour==12 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==5 and hour==12 %}
+             <td>{{ item}}</td>
+             {% endif %}
+         </tr>
+         <tr>
+             <td>13:00</td>
+             {% if day==1 and hour==13 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==2 and hour==13 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==3 and hour==13 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==4 and hour==13 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==5 and hour==13 %}
+             <td>{{ item}}</td>
+             {% endif %}
+          </tr>
+          <tr>
+             <td>14:00</td>
+              {% if day==1 and hour==14 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==2 and hour==14 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==3 and hour==14 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==4 and hour==14 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==5 and hour==14 %}
+             <td>{{ item}}</td>
+             {% endif %}
+          </tr>
+          <tr>
+             <td>15:00</td>
+              {% if day==1 and hour==15 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==2 and hour==15 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==3 and hour==15 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==4 and hour==15 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==5 and hour==15 %}
+             <td>{{item}}</td>
+             {% endif %}
+          </tr>
+          <tr>
+             <td>16:00</td>
+              {% if day==1 and hour==16 %}
+             <td>{{item}}</td>
+             {% endif %}
+             {% if day==2 and hour==16 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==3 and hour==16 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==4 and hour==16 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==5 and hour==16 %}
+             <td>{{ item}}</td>
+             {% endif %}
+          </tr>
+          <tr>
+             <td>17:00</td>
+              {% if day==1 and hour==17 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==2 and hour==17 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==3 and hour==17 %}
+             <td>{{item}}</td>
+             {% endif %}
+             {% if day==4 and hour==17 %}
+             <td>{{ item}}</td>
+             {% endif %}
+             {% if day==5 and hour==17 %}
+             <td>{{item}}</td>
+             {% endif %}
+          </tr>
+
+      </tbody>
+    </table>
+    </div>
+{% endblock %}

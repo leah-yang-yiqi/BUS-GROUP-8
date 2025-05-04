@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Download Contacts CSV (Without Age)</h1>
+<div class="container mb-3">
+    <form action="{{ url_for('download_csv') }}" method="post">
+        {{ form.csrf_token() }}
+        <button class="btn btn-primary" type="submit">Download CSV </button>
+    </form>
+</div>
+{% endblock %}
