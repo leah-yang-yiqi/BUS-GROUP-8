@@ -33,6 +33,9 @@ Then install the dependencies using pip，it is recommended to navigate to the p
 
 ```
 cd BUS-GROUP-8
+```
+
+```
 pip install -r requirements.txt
 ```
 
