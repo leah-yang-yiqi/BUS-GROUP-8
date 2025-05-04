@@ -31,14 +31,14 @@ from modelscope.pipelines import pipeline
 from modelscope import Model
 import torch.nn as nn
 
-from modelscope import AutoTokenizer, AutoModel, snapshot_download
-
-model_dir = "./models/ZhipuAI/chatglm3-6b"
-tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True)
-model = AutoModel.from_pretrained(model_dir, device_map="auto", offload_folder="offload_weights",
-                                  trust_remote_code=True).half()
-
-model = model.eval()
+# from modelscope import AutoTokenizer, AutoModel, snapshot_download
+#
+# model_dir = "./models/ZhipuAI/chatglm3-6b"
+# tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True)
+# model = AutoModel.from_pretrained(model_dir, device_map="auto", offload_folder="offload_weights",
+#                                   trust_remote_code=True).half()
+#
+# model = model.eval()
 
 
 # Databse classes
@@ -193,23 +193,23 @@ def chat_ui():
 
 
 # AI chatbot
-@app.route("/chat", methods=["POST"])
-def chat():
-    global chat_history
-    chat_history = []
-    if request.method == 'POST':
-        user_input = request.form.get('user_input')
-        if user_input:
-            # Construct input and invoke the model
-            response, chat_history = model.chat(tokenizer, user_input, chat_history)
-
-            # Add to the display dialog list
-            chat_history_display = [
-                {'role': 'User', 'content': user_input},
-                {'role': 'AI', 'content': response}
-            ]
-            return render_template('chat.html', chat_history=chat_history_display)
-    return render_template('chat.html', chat_history=[])
+# @app.route("/chat", methods=["POST"])
+# def chat():
+#     global chat_history
+#     chat_history = []
+#     if request.method == 'POST':
+#         user_input = request.form.get('user_input')
+#         if user_input:
+#             # Construct input and invoke the model
+#             response, chat_history = model.chat(tokenizer, user_input, chat_history)
+#
+#             # Add to the display dialog list
+#             chat_history_display = [
+#                 {'role': 'User', 'content': user_input},
+#                 {'role': 'AI', 'content': response}
+#             ]
+#             return render_template('chat.html', chat_history=chat_history_display)
+#     return render_template('chat.html', chat_history=[])
 
 
 UPLOAD_FOLDER = 'datas'
