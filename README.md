@@ -19,7 +19,7 @@ In terms of architectural design, we **adopted the classic MVC (Model-View-Contr
 
 Additionally, the **Decorator Pattern** was strictly followed throughout the project's development process.
 
-Project implements one-to-many and inheritance relationships in the database, and uses pytest to execute test cases.
+Project implements one-to-many and inheritance relationships, and uses pytest to execute test cases.
 
 
 ### **How to Run This Project**
