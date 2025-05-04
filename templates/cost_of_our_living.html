@@ -35,7 +35,7 @@
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <span>{{ resource }}</span>
         <div class="btn-group btn-group-sm" role="group">
-            <a class="btn btn-secondary" href="{{ url_for('download_file', filename=resource) }}">Download</a>
+            <a class="btn btn-secondary" href="{{ url_for('download_resource', filename=resource) }}">Download</a>
             {% if current_user.role in ['Staff', 'Admin'] %}
         <a class="btn btn-danger" href="{{ url_for('delete_resource', filename=resource) }}">Delete</a>
         {% endif %}
