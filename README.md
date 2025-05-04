@@ -26,12 +26,13 @@ Additionally, the **Decorator Pattern** was strictly followed throughout the pro
 First, you need to download this repository:
 
 ```
-git https://github.com/JiaxinHou-123/BUS-GROUP-8.git
+git clone https://github.com/JiaxinHou-123/BUS-GROUP-8.git
 ```
 
-Then install the dependencies using pip:
+Then install the dependencies using pip，it is recommended to navigate to the project directory before running the command.":
 
 ```
+cd BUS-GROUP-8
 pip install -r requirements.txt
 ```
 
