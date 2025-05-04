@@ -31,14 +31,7 @@ from modelscope.pipelines import pipeline
 from modelscope import Model
 import torch.nn as nn
 
-# from modelscope import AutoTokenizer, AutoModel, snapshot_download
-#
-# model_dir = "./models/ZhipuAI/chatglm3-6b"
-# tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True)
-# model = AutoModel.from_pretrained(model_dir, device_map="auto", offload_folder="offload_weights",
-#                                   trust_remote_code=True).half()
-#
-# model = model.eval()
+from modelscope import AutoTokenizer, AutoModel, snapshot_download
 
 
 # Databse classes
@@ -174,7 +167,7 @@ class Suggestion_BudgetForm(FlaskForm):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 
 @app.route("/")
@@ -192,24 +185,36 @@ def chat_ui():
     return render_template("chat.html")
 
 
+def get_AIModel():
+    model_dir = "./models/ZhipuAI/chatglm3-6b"
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    model_dir = os.path.join(base_dir, "models", "ZhipuAI", "chatglm3-6b")
+
+    tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True, local_files_only=True)
+    model = AutoModel.from_pretrained(model_dir, device_map="auto", offload_folder="offload_weights",
+                                      trust_remote_code=True, local_files_only=True).half()
+    return tokenizer, model.eval()
+
+
 # AI chatbot
-# @app.route("/chat", methods=["POST"])
-# def chat():
-#     global chat_history
-#     chat_history = []
-#     if request.method == 'POST':
-#         user_input = request.form.get('user_input')
-#         if user_input:
-#             # Construct input and invoke the model
-#             response, chat_history = model.chat(tokenizer, user_input, chat_history)
-#
-#             # Add to the display dialog list
-#             chat_history_display = [
-#                 {'role': 'User', 'content': user_input},
-#                 {'role': 'AI', 'content': response}
-#             ]
-#             return render_template('chat.html', chat_history=chat_history_display)
-#     return render_template('chat.html', chat_history=[])
+@app.route("/chat", methods=["POST"])
+def chat():
+    global chat_history
+    chat_history = []
+    if request.method == 'POST':
+        user_input = request.form.get('user_input')
+        if user_input:
+            # Construct input and invoke the model
+            tokenizer, model = get_AIModel()
+            response, chat_history = model.chat(tokenizer, user_input, chat_history)
+
+            # Add to the display dialog list
+            chat_history_display = [
+                {'role': 'User', 'content': user_input},
+                {'role': 'AI', 'content': response}
+            ]
+            return render_template('chat.html', chat_history=chat_history_display)
+    return render_template('chat.html', chat_history=[])
 
 
 UPLOAD_FOLDER = 'datas'
@@ -276,10 +281,7 @@ def accessibility():
         uploaded_files = [f for f in uploaded_files if search_query.lower() in f.lower()]
 
     feedbacks = []
-
-    # Feedbacks for Admin to read
-    if current_user.role == 'Admin':
-        feedbacks = Feedback.query.order_by(Feedback.timestamp.desc()).all()
+    feedbacks = Feedback.query.order_by(Feedback.timestamp.desc()).all()
 
     return render_template('accessibility.html', files=uploaded_files, search_query=search_query,
                            feedbacks=feedbacks)

@@ -2,10 +2,9 @@ import pytest
 import sys
 import os
 
-# 让 tests/ 上一层路径加入 Python 模块搜索路径
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app import app, db  # 现在可以正常导入
+from app import app, db
 
 @pytest.fixture
 def client():
