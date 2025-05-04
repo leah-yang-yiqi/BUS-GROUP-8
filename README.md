@@ -2,7 +2,7 @@
 
 The **original purpose of building this code project** was to complete Assignment-Part 2 of the University of Birmingham's Building Usable Software course. During the development process, we built upon the project documentation from Assignment-Part 1 to design and implement three core modules: 
 
-* **AI Dialogue **
+* **AI Dialogue**
 * **Accessibility Support**
 * **Cost of Living Support**
 
