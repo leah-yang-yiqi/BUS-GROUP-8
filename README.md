@@ -27,7 +27,7 @@ Project implements one-to-many and inheritance relationships, and uses pytest to
 First, you need to download this repository:
 
 ```
-git clone https://github.com/JiaxinHou-123/BUS-GROUP-8.git
+git clone -b V1.0 https://github.com/leah-yang-yiqi/BUS-GROUP-8.git
 ```
 
 Then install the dependencies using pip，it is recommended to navigate to the project directory before running the command.":
